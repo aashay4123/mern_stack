@@ -1,0 +1,13 @@
+{
+  "name": "mern_stack",
+  "version": "1.0.0",
+  "description": "basic mern stack application.",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon App.js",
+    "client": "npm start --prefix client",
+    "start": "concurrently  \"npm run server\" \"npm run client\""
+  },
+  "author": "Aashay Phirke",
+  "license": "ISC"
+}
