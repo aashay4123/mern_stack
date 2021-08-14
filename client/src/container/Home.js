@@ -1,6 +1,8 @@
 import React from "react";
 import Buttons from "../component/Buttons";
-import BasicTable from "../component/BasicTable";
+import StudentTable from "../component/StudentTable";
+import CourseTable from "../component/CourseTable";
+import StudentCourseTable from "../component/StudentCourseTable";
 const Home = () => {
   return (
     <div>
@@ -8,7 +10,9 @@ const Home = () => {
         <Buttons />
       </div>
       <div className="" style={{ margin: "20px" }}>
-        <BasicTable />
+        <StudentTable />
+        <CourseTable />
+        <StudentCourseTable />
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Home() {
+export default function Home(props) {
   const classes = useStyles();
 
   return (
@@ -27,9 +27,27 @@ export default function Home() {
           Student Course Load
         </Button>
       </div>
-      <Button variant="contained" style={{ float: "right" }}>
+      {/* {!props.state === "student" ? ( */}
+      <Button
+        onClick={() => {
+          window.location.replace("/addStudent");
+        }}
+        variant="contained"
+        style={{ float: "right" }}
+      >
         Add Students
       </Button>
+      {/* ) : ( */}
+      <Button
+        onClick={() => {
+          window.location.replace("/addCourse");
+        }}
+        variant="contained"
+        style={{ float: "right" }}
+      >
+        Add Course
+      </Button>
+      {/* )} */}
     </Fragment>
   );
 }
