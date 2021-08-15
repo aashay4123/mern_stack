@@ -1,0 +1,27 @@
+export const program = [
+  { label: "Computer Science", value: 1 },
+  { label: "Information Systems", value: 2 },
+  { label: "Financial Engineering", value: 58 },
+  { label: "Financial Analytics", value: 3 },
+  { label: "Business Intelligence & Analytics", value: 4 },
+  { label: "Enterprise Project Management", value: 5 },
+  { label: "Management", value: 6 },
+  { label: "Network communication & Management Services", value: 7 },
+  { label: "Sports Technologies Dual Masters Program", value: 55 },
+  { label: "Technology Management", value: 8 },
+];
+export const Courses = [
+  { label: "Database Management System", value: 1 },
+  { label: "Data Analytics & Machine Learning ", value: 2 },
+  { label: "Financial Decision Making", value: 58 },
+  { label: "Project Management Fundamentals", value: 3 },
+  { label: "Digital Innovation", value: 4 },
+  { label: "Process Innovation and Management", value: 5 },
+  { label: "Integrating Information System Technologies ", value: 6 },
+  { label: "Business Analytics: Data, Models and Decisions", value: 7 },
+  { label: "Applied Statistics with Applications in Finance", value: 8 },
+  { label: "Introduction to Financial Risk Management", value: 9 },
+  { label: "Statistical Learning in Finance", value: 10 },
+  { label: "Time Series with Applications to Finance", value: 11 },
+  { label: "Pricing and Hedging", value: 12 },
+];

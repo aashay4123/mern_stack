@@ -1,23 +1,21 @@
 import React, { useState } from "react";
 import { StudentForm } from "../component/StudentForm";
 import axios from "axios";
+import { program as options } from "../utils/options";
 
 const AddStudentForm = () => {
   const [name, setName] = useState("");
   const [age, setAge] = useState(null);
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState(null);
-  const [options, setOptions] = useState([
-    { name: "Option 1️⃣", id: 1 },
-    { name: "Option 2️⃣", id: 2 },
-  ]);
-  const [selectedValues, setSelectedValues] = useState([
-    { name: "Option 1️⃣", id: 1 },
-    { name: "Option 2️⃣", id: 2 },
-  ]);
+
+  const [selectedValue, setSelectedValue] = useState([]);
+
   // const [program, setProgram] = useState(null);
 
+  // eslint-disable-next-line no-unused-vars
   const [errors, setError] = useState({});
+
   const onClick = async (e) => {
     e.preventDefault();
     let body = {
@@ -27,7 +25,7 @@ const AddStudentForm = () => {
       number,
       // program,
     };
-    // await axios.post("/api/", body);
+    await axios.post("/api/", body);
   };
   const handleChange = (event, setValue) => {
     switch (setValue) {
@@ -75,8 +73,9 @@ const AddStudentForm = () => {
         email={email}
         number={number}
         errors={errors}
-        selectedValues={selectedValues}
+        selectedValue={selectedValue}
         options={options}
+        setSelectedValue={setSelectedValue}
       />
     </div>
   );
