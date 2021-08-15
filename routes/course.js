@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const factory = require("../controller/course");
+const factory = require("../controller/handlerFactory");
+const Course = require("../Model/course");
 
-router.route("/").get(factory.getAll(Student)).post(factory.createOne(Student));
+router.route("/").get(factory.getAll(Course)).post(factory.createOne(Course));
 
 router
   .route("/:id")
-  .get(factory.getOne(Student))
-  .patch(factory.updateOne(Student))
-  .delete(factory.deleteOne(Student));
+  .get(factory.getOne(Course))
+  .patch(factory.updateOne(Course))
+  .delete(factory.deleteOne(Course));
 module.exports = router;

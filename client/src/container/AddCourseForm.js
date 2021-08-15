@@ -1,10 +1,10 @@
 import React from "react";
 import { CourseForm } from "../component/CourseForm";
-const AddStudentForm = () => {
+const AddCourseForm = () => {
   return (
     <div>
       <CourseForm />
     </div>
   );
 };
-export default AddStudentForm;
+export default AddCourseForm;
