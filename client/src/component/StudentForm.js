@@ -12,16 +12,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing(5),
-
   },
   paper: {
     padding: theme.spacing(0),
-    textAlign: "center",
+    textAlign: "left",
     color: theme.palette.text.secondary,
     height: 550,
-    width: 300,
-
-  }
+    width: 800,
+  },
 }));
 
 export const StudentForm = (props) => {
@@ -94,6 +92,16 @@ export const StudentForm = (props) => {
               }
             </Grid>
             <br />
+
+            <Grid item xs={12}>
+              <Dropdown
+                options={props.Courses}
+                value={props.course}
+                onChange={props.setCourse}
+                placeholder="Program Name"
+              />
+            </Grid>
+            <br />
             <Grid item xs={12}>
               <MultiSelect
                 options={props.options}
@@ -102,16 +110,7 @@ export const StudentForm = (props) => {
                 labelledBy="ProgramName"
               />
             </Grid>
-            <br />
-            <Grid item xs={12}>
-              <Dropdown
-                //  options={props.options}
-                // value={props.selectedValue}
-                // onChange={props.setSelectedValue}
-                placeholder="Select an option"
-              />
-              ;
-            </Grid>
+
             <br />
             <Button variant="contained" color="primary" onClick={props.onClick}>
               Submit
@@ -119,6 +118,6 @@ export const StudentForm = (props) => {
           </form>
         </Paper>
       </Grid>
-    </div >
+    </div>
   );
 };

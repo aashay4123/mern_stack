@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StudentForm } from "../component/StudentForm";
 import axios from "axios";
 import { program as options } from "../utils/options";
+import { Courses } from "../utils/options";
 
 const AddStudentForm = () => {
   const [name, setName] = useState("");
@@ -11,7 +12,7 @@ const AddStudentForm = () => {
 
   const [selectedValue, setSelectedValue] = useState([]);
 
-  // const [program, setProgram] = useState(null);
+  const [course, setCourse] = useState("");
 
   // eslint-disable-next-line no-unused-vars
   const [errors, setError] = useState({});
@@ -37,8 +38,13 @@ const AddStudentForm = () => {
       case "age":
         setAge(event.target.value);
 
-        if (!event.target.value) errors.name = "Required";
-        else errors.age = null;
+        if (!event.target.value) errors.age = "Required";
+        else if (event.target.value) {
+          let pattern = new RegExp("^[0-9]");
+          if (!pattern.test(event.target.value)) {
+            errors.age = "*Please enter valid number";
+          } else errors.age = null;
+        } else errors.age = null;
         break;
       case "email":
         setEmail(event.target.value);
@@ -54,10 +60,13 @@ const AddStudentForm = () => {
         setNumber(event.target.value);
         if (!event.target.value) errors.number = "Required";
         else if (event.target.value) {
-          if (!event.target.value.length === 10) {
-            errors.email = "*Please enter valid Number";
-          }
-        } else errors.name = null;
+          let pattern = new RegExp("^[0-9]");
+          if (!pattern.test(event.target.value)) {
+            errors.number = "*Please enter valid number";
+          } else if (!event.target.value.length === 10) {
+            errors.number = "*phone number invalid";
+          } else errors.number = null;
+        } else errors.number = null;
         break;
       default:
         break;
@@ -76,6 +85,9 @@ const AddStudentForm = () => {
         selectedValue={selectedValue}
         options={options}
         setSelectedValue={setSelectedValue}
+        Courses={Courses}
+        course={course}
+        setCourse={setCourse}
       />
     </div>
   );
