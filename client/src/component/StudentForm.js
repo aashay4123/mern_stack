@@ -8,118 +8,117 @@ import Grid from "@material-ui/core/Grid";
 import MultiSelect from "react-multi-select-component";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& > *": {
-      margin: theme.spacing(1),
-      width: "25ch",
-    },
-    root: {
-      flexGrow: 1,
-      margin: theme.spacing(3),
-      width: "25ch",
-      alignContent: "center",
-      justifyContent: "center",
-    },
-    paper: {
-      padding: theme.spacing(20),
-      textAlign: "center",
-      color: theme.palette.text.secondary,
-      height: 500,
-      width: 800,
-    },
+    flexGrow: 1,
+    padding: theme.spacing(5),
+
   },
+  paper: {
+    padding: theme.spacing(0),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    height: 550,
+    width: 300,
+
+  }
 }));
 
 export const StudentForm = (props) => {
   const classes = useStyles();
   console.log(props);
   return (
-    <Grid container spacing={3}>
-      <Paper className={classes.paper}>
-        <form className={classes.root} noValidate autoComplete="off">
-          <Grid item xs={12}>
-            <TextField
-              id="standard-basic"
-              label="Name"
-              value={props.name}
-              onChange={(e) => props.handleChange(e, "name")}
-            />
+    <div className={classes.root}>
+      <Grid container spacing={5} justifyContent="center">
+        <Paper className={classes.paper} elevation={3}>
+          <form className={classes.root} noValidate autoComplete="off">
+            <Grid item xs={12}>
+              <TextField
+                id="standard-basic"
+                label="Name"
+                value={props.name}
+                onChange={(e) => props.handleChange(e, "name")}
+              />
 
-            {
-              <div style={{ color: "red", textAlign: "center" }}>
-                {props.errors.name}
-              </div>
-            }
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              id="filled-basic"
-              label="email"
-              variant="filled"
-              value={props.email}
-              onChange={(e) => props.handleChange(e, "email")}
-            />
+              {
+                <div style={{ color: "red", textAlign: "center" }}>
+                  {props.errors.name}
+                </div>
+              }
+            </Grid>
+            <br />
+            <Grid item xs={12}>
+              <TextField
+                id="filled-basic"
+                label="Email"
+                variant="filled"
+                value={props.email}
+                onChange={(e) => props.handleChange(e, "email")}
+              />
 
-            {
-              <div style={{ color: "red", textAlign: "center" }}>
-                {props.errors.email}
-              </div>
-            }
-          </Grid>
+              {
+                <div style={{ color: "red", textAlign: "center" }}>
+                  {props.errors.email}
+                </div>
+              }
+            </Grid>
+            <br />
 
-          <Grid item xs={12}>
-            <TextField
-              id="outlined-basic"
-              label="Age"
-              variant="outlined"
-              value={props.age}
-              onChange={(e) => props.handleChange(e, "age")}
-            />
-            {
-              <div style={{ color: "red", textAlign: "center" }}>
-                {props.errors.age}
-              </div>
-            }
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              id="outlined-basic"
-              label="Number"
-              variant="outlined"
-              value={props.number}
-              onChange={(e) => props.handleChange(e, "number")}
-            />
-            {
-              <div style={{ color: "red", textAlign: "center" }}>
-                {props.errors.number}
-              </div>
-            }
-          </Grid>
-
-          <Grid item xs={12}>
-            <MultiSelect
-              options={props.options}
-              value={props.selectedValue}
-              onChange={props.setSelectedValue}
-              labelledBy="Select"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Dropdown
-              // options={options}
-              onChange={this._onSelect}
-              // value={defaultOption}
-              placeholder="Select an option"
-            />
-            ;
-          </Grid>
-          <Button variant="contained" color="primary" onClick={props.onClick}>
-            Submit
-          </Button>
-        </form>
-      </Paper>
-    </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="outlined-basic"
+                label="Age"
+                variant="outlined"
+                value={props.age}
+                onChange={(e) => props.handleChange(e, "age")}
+              />
+              {
+                <div style={{ color: "red", textAlign: "center" }}>
+                  {props.errors.age}
+                </div>
+              }
+            </Grid>
+            <br />
+            <Grid item xs={12}>
+              <TextField
+                id="outlined-basic"
+                label="Contact Number"
+                variant="outlined"
+                value={props.number}
+                onChange={(e) => props.handleChange(e, "number")}
+              />
+              {
+                <div style={{ color: "red", textAlign: "center" }}>
+                  {props.errors.number}
+                </div>
+              }
+            </Grid>
+            <br />
+            <Grid item xs={12}>
+              <MultiSelect
+                options={props.options}
+                value={props.selectedValue}
+                onChange={props.setSelectedValue}
+                labelledBy="ProgramName"
+              />
+            </Grid>
+            <br />
+            <Grid item xs={12}>
+              <Dropdown
+                //  options={props.options}
+                // value={props.selectedValue}
+                // onChange={props.setSelectedValue}
+                placeholder="Select an option"
+              />
+              ;
+            </Grid>
+            <br />
+            <Button variant="contained" color="primary" onClick={props.onClick}>
+              Submit
+            </Button>
+          </form>
+        </Paper>
+      </Grid>
+    </div >
   );
 };
