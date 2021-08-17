@@ -19,13 +19,13 @@ const StudentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  emailId: {
+  email: {
     type: String,
     required: true,
     unique: true,
     trim: true,
   },
-  courseId: [{ type: mongoose.Schema.ObjectId, ref: "" }],
+  courseId: [{ type: mongoose.Schema.ObjectId, ref: "Course" }],
 });
 
 StudentSchema.pre(/^find/, function (next) {

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const factory = require("../controller/handlerFactory");
-const Course = require("../Model/course");
+const Course = require("../Model/Course");
 
 router.route("/").get(factory.getAll(Course)).post(factory.createOne(Course));
 

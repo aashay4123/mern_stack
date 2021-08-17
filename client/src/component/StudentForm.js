@@ -112,7 +112,12 @@ export const StudentForm = (props) => {
             </Grid>
 
             <br />
-            <Button variant="contained" color="primary" onClick={props.onClick}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={props.onClick}
+              disabled={props.disabled}
+            >
               Submit
             </Button>
           </form>

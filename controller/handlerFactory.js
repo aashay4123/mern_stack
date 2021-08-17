@@ -12,22 +12,17 @@ const updateHelper = (doc, req) => {
     req.body,
     "name",
     "program",
-    "emailId",
+    "email",
     "mobileNumber",
     "age",
     "credits",
   );
 
   Object.keys(filteredBody).forEach((el) => (doc[el] = filteredBody[el]));
-  if (req.body.channels)
-    doc.channels.push({
-      person: ObjectId(req.body.channels.person),
-      chat: ObjectId(req.body.channels.chat),
-      onModel: req.body.channels.onModel,
-    });
-  if (req.body.studentId) {
-    const unique = addArrayNum(req.body.studentId);
-    doc.studentId = unique;
+
+  if (req.body.courseId) {
+    const unique = addArrayNum(req.body.courseId);
+    doc.courseId = unique;
   }
   if (req.body.isPrivate) {
     doc.isPrivate = Boolean(req.body.isPrivate);
@@ -75,40 +70,16 @@ exports.updateOne = (Model) =>
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
     let data = {};
-    const filteredBody = filterObj(
-      req.body,
-      "emailId",
-      "role",
-      "name",
-      "report",
-      "subject",
-      "joined",
-      "employee_id",
-      "domain",
-    );
 
-    Object.keys(filteredBody).forEach((el) => (data[el] = filteredBody[el]));
     document = updateHelper(data, req);
     const doc = await Model.create(document);
-    if (doc.rating > 0) {
-      sendEmail({
-        to: req.user.emailId,
-        subject: "Your review has been created",
-      }).then(({ emailErr, emailDebug }) => {
-        if (emailErr) return res.status(500).send({ emailErr });
-        return res.status(200).send({
-          message: `Successfully created review and sent for moderation`,
-          debug: { dbDebug: emailDebug },
-        });
-      });
-    } else {
-      res.status(201).json({
-        status: "success",
-        data: {
-          data: doc,
-        },
-      });
-    }
+
+    res.status(201).json({
+      status: "success",
+      data: {
+        data: doc,
+      },
+    });
   });
 
 exports.getOne = (Model, popOptions) =>
@@ -137,19 +108,9 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    // // To allow for nested GET reviews on review
-    let filter = {};
-
-    if (req.baseUrl === "/api/reviews")
-      if (req.user.role !== "admin") filter = { isApproved: true };
-
-    const features = new APIFeatures(Model.find(filter), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    // const doc = await features.query.explain();
-    const doc = await features.query;
+    console.log("object");
+    const doc = await Model.find({});
+    console.log("object", doc);
 
     // SEND RESPONSE
     res.status(200).json({

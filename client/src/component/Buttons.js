@@ -31,13 +31,6 @@ export default function Home(props) {
         >
           Courses
         </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => props.setState("studentCourse")}
-        >
-          Student Course Load
-        </Button>
       </div>
       {props.state === "student" ? (
         <Button

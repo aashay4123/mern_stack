@@ -6,7 +6,6 @@ const studentRoute = require("./routes/student");
 const courseRoute = require("./routes/course");
 const app = express();
 const mongo_url = process.env.MONGO_URL;
-
 mongoose
   .connect(mongo_url, {
     useUnifiedTopology: true,
@@ -23,12 +22,18 @@ mongoose.Promise = global.Promise;
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-app.use("/api", studentRoute);
-app.use("/api", courseRoute);
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept",
+  );
+  next();
+});
+app.use("/api/student", studentRoute);
+app.use("/api/course", courseRoute);
 
 const port = process.env.PORT || 8000;
-
 app.listen(port, () => {
   console.log(`Api is running on port ${port} - ${process.env.NODE_ENV}`);
 });

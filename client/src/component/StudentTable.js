@@ -7,6 +7,11 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import EditIcon from "@material-ui/icons/Edit";
+import Chip from "@material-ui/core/Chip";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
+import { SearchBar } from "../utils/SearchBar";
 
 const useStyles = makeStyles({
   table: {
@@ -26,31 +31,74 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
-export default function StudentTable() {
+export default function StudentTable(props) {
   const classes = useStyles();
 
   return (
     <TableContainer component={Paper}>
+      <SearchBar
+        role="student"
+        list={props.list}
+        nameList={props.nameList}
+        searchName={(newlist) => {
+          props.setSearchValues(newlist);
+        }}
+      />
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Name</TableCell>
-            <TableCell align="right">Age&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell colSpan={1}>Name</TableCell>
+            <TableCell align="right" colSpan={1}>
+              Program Name
+            </TableCell>
+            <TableCell align="right" colSpan={4}>
+              Courses
+            </TableCell>
+            <TableCell align="right" colSpan={1}>
+              Contact Number
+            </TableCell>
+            <TableCell align="right" colSpan={1}>
+              Email
+            </TableCell>
+            <TableCell align="right" colSpan={3}>
+              Age
+            </TableCell>
+            <TableCell align="right" colSpan={1}>
+              Actions
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" colSpan={1}>
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right" colSpan={1}>
+                {row.calories}
+              </TableCell>
+              <TableCell align="right" colSpan={4}>
+                <Chip label={row.fat} />
+              </TableCell>
+              <TableCell align="right" colSpan={1}>
+                {row.carbs}
+              </TableCell>
+              <TableCell align="right" colSpan={1}>
+                {row.protein}
+              </TableCell>
+
+              <TableCell align="right" colSpan={3}>
+                {row.protein}
+              </TableCell>
+              <TableCell align="right" colSpan={1}>
+                <IconButton aria-label="delete" className={classes.margin}>
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+
+                <IconButton aria-label="edit" className={classes.margin}>
+                  <EditIcon fontSize="small" />
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
