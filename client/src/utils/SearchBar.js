@@ -23,7 +23,7 @@ export const SearchBar = (props) => {
   };
 
   const checkname = (name1) => {
-    console.log("object", props);
+    console.log("object", name1);
     if (name1 === "") {
       props.searchName(props.list);
     } else {
@@ -38,7 +38,14 @@ export const SearchBar = (props) => {
   };
 
   return (
-    <div className="jumbotron searchBar" style={{ height: 5 }}>
+    <div
+      style={{
+        height: "20px",
+        justifyContent: "center",
+        textAlign: "center",
+        float: "center",
+      }}
+    >
       <div className="input-group mb-3">
         <Typeahead
           id="typeaheadBar"
@@ -48,6 +55,7 @@ export const SearchBar = (props) => {
           onChange={handleChange}
           onInputChange={handleInputChange}
           ref={ref}
+          style={{ height: "50px" }}
         />
         <div className="input-group-prepend ml-1">
           <span className="input-group-text border-0 bg-transparent">

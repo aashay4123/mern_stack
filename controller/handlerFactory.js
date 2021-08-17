@@ -108,9 +108,7 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    console.log("object");
     const doc = await Model.find({});
-    console.log("object", doc);
 
     // SEND RESPONSE
     res.status(200).json({

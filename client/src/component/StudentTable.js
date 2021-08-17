@@ -11,7 +11,6 @@ import EditIcon from "@material-ui/icons/Edit";
 import Chip from "@material-ui/core/Chip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
-import { SearchBar } from "../utils/SearchBar";
 
 const useStyles = makeStyles({
   table: {
@@ -33,17 +32,9 @@ const rows = [
 
 export default function StudentTable(props) {
   const classes = useStyles();
-
+  console.log("object", props);
   return (
     <TableContainer component={Paper}>
-      <SearchBar
-        role="student"
-        list={props.list}
-        nameList={props.nameList}
-        searchName={(newlist) => {
-          props.setSearchValues(newlist);
-        }}
-      />
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -51,9 +42,9 @@ export default function StudentTable(props) {
             <TableCell align="right" colSpan={1}>
               Program Name
             </TableCell>
-            <TableCell align="right" colSpan={4}>
+            {/* <TableCell align="right" colSpan={4}>
               Courses
-            </TableCell>
+            </TableCell> */}
             <TableCell align="right" colSpan={1}>
               Contact Number
             </TableCell>
@@ -69,26 +60,26 @@ export default function StudentTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {props.rows.map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row" colSpan={1}>
                 {row.name}
               </TableCell>
               <TableCell align="right" colSpan={1}>
-                {row.calories}
+                {row.program}
               </TableCell>
-              <TableCell align="right" colSpan={4}>
+              {/* <TableCell align="right" colSpan={4}>
                 <Chip label={row.fat} />
+              </TableCell> */}
+              <TableCell align="right" colSpan={1}>
+                {row.mobileNumber}
               </TableCell>
               <TableCell align="right" colSpan={1}>
-                {row.carbs}
-              </TableCell>
-              <TableCell align="right" colSpan={1}>
-                {row.protein}
+                {row.email}
               </TableCell>
 
               <TableCell align="right" colSpan={3}>
-                {row.protein}
+                {row.age}
               </TableCell>
               <TableCell align="right" colSpan={1}>
                 <IconButton aria-label="delete" className={classes.margin}>

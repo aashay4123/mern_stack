@@ -3,13 +3,11 @@ import Buttons from "../component/Buttons";
 import StudentTable from "../component/StudentTable";
 import CourseTable from "../component/CourseTable";
 import axios from "axios";
-import { SearchBar } from "../utils/SearchBar";
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import download from "../utils/logo.jpeg";
 import { makeStyles } from "@material-ui/core/styles";
+import { SearchBar } from "../utils/SearchBar";
+import { Grid } from "@material-ui/core";
+import download from "../utils/logo.jpeg";
+
 const Home = () => {
   const [state, setState] = useState("student");
   const [courseNameList, setcourseNameList] = useState([]);
@@ -78,22 +76,10 @@ const Home = () => {
   if (studentValues.length > 0) {
     switch (state) {
       case "student":
-        render = (
-          <StudentTable
-            nameList={studentNameList}
-            setSearchValues={setstudentValues}
-            list={studentValues}
-          />
-        );
+        render = <StudentTable rows={studentValues} />;
         break;
       case "course":
-        render = (
-          <CourseTable
-            nameList={courseNameList}
-            setSearchValues={setcourseValues}
-            list={courseValues}
-          />
-        );
+        render = <CourseTable rows={courseValues} />;
         break;
 
       default:
@@ -110,7 +96,7 @@ const Home = () => {
               alt="Stevens Logo"
               width="1200"
               height="200"
-              style={{ verticalAlign: "middle" }}
+              style={{ width: "250px", float: "center" }}
             />
           </div>
         </Grid>
@@ -120,6 +106,58 @@ const Home = () => {
           </div>
         </Grid>
         <br />
+        <Grid item xs={3}>
+          <SearchBar
+            role={state}
+            list={state === "student" ? studentValues : courseValues}
+            nameList={state === "student" ? studentNameList : courseNameList}
+            style={{ width: "1000px" }}
+            searchName={(newlist) => {
+              state === "student"
+                ? setstudentValues(newlist)
+                : setcourseValues(newlist);
+            }}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <SearchBar
+            role={state}
+            list={state === "student" ? studentValues : courseValues}
+            nameList={state === "student" ? studentNameList : courseNameList}
+            style={{ width: "1000px" }}
+            searchName={(newlist) => {
+              state === "student"
+                ? setstudentValues(newlist)
+                : setcourseValues(newlist);
+            }}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <SearchBar
+            role={state}
+            list={state === "student" ? studentValues : courseValues}
+            nameList={state === "student" ? studentNameList : courseNameList}
+            style={{ width: "1000px" }}
+            searchName={(newlist) => {
+              state === "student"
+                ? setstudentValues(newlist)
+                : setcourseValues(newlist);
+            }}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <SearchBar
+            role={state}
+            list={state === "student" ? studentValues : courseValues}
+            nameList={state === "student" ? studentNameList : courseNameList}
+            style={{ width: "1000px" }}
+            searchName={(newlist) => {
+              state === "student"
+                ? setstudentValues(newlist)
+                : setcourseValues(newlist);
+            }}
+          />
+        </Grid>
         <Grid item xs={12}>
           <div className="" style={{ margin: "20px" }}>
             {render}
