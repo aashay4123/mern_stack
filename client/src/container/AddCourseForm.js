@@ -3,7 +3,7 @@ import { CourseForm } from "../component/CourseForm";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const AddCourseForm = () => {
+const AddCourseForm = (props) => {
   const [name, setName] = useState("");
   const [credits, setCredits] = useState(null);
   const id = window.location.pathname && window.location.pathname.split("/")[2];
@@ -29,14 +29,15 @@ const AddCourseForm = () => {
       credits,
     };
     if (body.name && body.credits) {
-      let op;
-      if (id)
-        op = await axios.patch(`http://localhost:8000/api/course/${id}`, body);
-      else op = await axios.post("http://localhost:8000/api/course", body);
-      console.log("object13554", op);
-      if (op.status === 200) toast.success("Course successfully added");
-      else toast.error("Something went wrong");
-      window.location.replace("/");
+      if (id) await axios.patch(`http://localhost:8000/api/course/${id}`, body);
+      else await axios.post("http://localhost:8000/api/course", body);
+      toast.success("Course successfully added");
+      props.history.push({
+        pathname: "/",
+        state: {
+          newState: "course",
+        },
+      });
     } else {
       toast.error("Please fill the complete form");
     }

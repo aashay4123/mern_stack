@@ -80,19 +80,19 @@ export const StudentForm = (props) => {
 
             <Grid item xs={12}>
               <Dropdown
-                options={props.Courses}
-                value={props.course}
-                onChange={props.setCourse}
+                options={props.options}
+                value={props.program}
+                onChange={props.setprogram}
                 placeholder="Program Name"
               />
             </Grid>
             <br />
             <Grid item xs={12}>
               <MultiSelect
-                options={props.options}
-                value={props.selectedValue}
-                onChange={props.setSelectedValue}
-                labelledBy="ProgramName"
+                options={props.allCourses}
+                value={props.selectedCourses}
+                onChange={props.setselectedCourses}
+                labelledBy="course"
               />
             </Grid>
 

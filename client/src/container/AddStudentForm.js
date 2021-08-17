@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { StudentForm } from "../component/StudentForm";
 import axios from "axios";
 import { program as options } from "../utils/options";
-import { Courses } from "../utils/options";
 import { toast } from "react-toastify";
 const AddStudentForm = (props) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
-  const [selectedValue, setSelectedValue] = useState([]);
-  const [course, setCourse] = useState("");
+  const [selectedCourses, setselectedCourses] = useState([]);
+  const [program, setprogram] = useState("");
+  const [allCourses, setallCourses] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [errors, setError] = useState({});
   const [disabled, setdisabled] = useState(true);
@@ -19,13 +19,29 @@ const AddStudentForm = (props) => {
   useEffect(async () => {
     if (id) {
       const res = await axios.get(`http://localhost:8000/api/student/${id}`);
-      console.log("object", res);
       if (res.data && res.status === 200) {
         const data = res.data.data.data[0];
         setName(data.name);
-        setCourse({ label: data.program, value: 3 });
+        setprogram({ label: data.program, value: 3 });
         setEmail(data.email);
         setNumber(data.mobileNumber);
+        let selectedData =
+          data.courseId &&
+          data.courseId.map((course) => {
+            return { label: course.name, value: course._id };
+          });
+        setselectedCourses(selectedData);
+      }
+    }
+    const courses = await axios.get("http://localhost:8000/api/course");
+
+    if (courses && courses.status === 200) {
+      if (courses.data.data.data && courses.data.data.data.length > 0) {
+        let list = courses.data.data.data;
+        let finalList = list.map((course) => {
+          return { label: course.name, value: course._id };
+        });
+        setallCourses(finalList);
       }
     }
   }, [id]);
@@ -35,8 +51,8 @@ const AddStudentForm = (props) => {
     e.preventDefault();
     let courseId = [];
     // eslint-disable-next-line array-callback-return
-    selectedValue.map((item) => {
-      courseId.push(item.label);
+    selectedCourses.map((item) => {
+      courseId.push(item.value);
     });
 
     let body = {
@@ -44,17 +60,14 @@ const AddStudentForm = (props) => {
       age,
       email,
       mobileNumber: number,
-      program: course.label,
+      program: program.label,
       courseId,
     };
     if (body.name && body.email && body.mobileNumber && body.program) {
-      let op;
       if (id)
-        op = await axios.patch(`http://localhost:8000/api/student/${id}`, body);
-      else op = await axios.post("http://localhost:8000/api/student", body);
-      console.log("object", op);
-      if (op.status === 200) toast.success("Course successfully added");
-      else toast.error("Something went wrong");
+        await axios.patch(`http://localhost:8000/api/student/${id}`, body);
+      else await axios.post("http://localhost:8000/api/student", body);
+      toast.success("program successfully added");
       window.location.replace("/");
     } else {
       toast.error("Please fill the complete form");
@@ -131,9 +144,19 @@ const AddStudentForm = (props) => {
           setdisabled(false);
         }
         break;
+      case "selectedCourses":
+        if (!selectedCourses.length > 0) {
+          errors.selectedCourses = "*Please select a course";
+          setdisabled(true);
+        } else setdisabled(false);
+        break;
       default:
         break;
     }
+  };
+  const changeSeletedCourse = (data) => {
+    setselectedCourses(data);
+    handleChange(null, "selectedCourses");
   };
   return (
     <div>
@@ -145,13 +168,13 @@ const AddStudentForm = (props) => {
         email={email}
         number={number}
         errors={errors}
-        selectedValue={selectedValue}
+        selectedCourses={selectedCourses}
         options={options}
-        setSelectedValue={setSelectedValue}
-        Courses={Courses}
-        course={course}
+        setselectedCourses={changeSeletedCourse}
+        allCourses={allCourses}
+        program={program}
         disabled={disabled}
-        setCourse={setCourse}
+        setprogram={setprogram}
       />
     </div>
   );

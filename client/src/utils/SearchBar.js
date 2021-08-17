@@ -56,7 +56,7 @@ export const SearchBar = (props) => {
           onChange={handleChange}
           onInputChange={handleInputChange}
           ref={ref}
-          style={{ height: "50px" }}
+          style={{ height: "50px", textAlign: "center" }}
         />
       </div>
     </div>

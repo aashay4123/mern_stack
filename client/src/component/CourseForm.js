@@ -60,6 +60,15 @@ export const CourseForm = (props) => {
             <Button variant="contained" color="primary" onClick={props.onClick}>
               Submit
             </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                window.location.replace("/");
+              }}
+            >
+              Back
+            </Button>
           </form>
         </Paper>
       </Grid>

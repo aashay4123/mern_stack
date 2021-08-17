@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { SearchBar } from "../utils/SearchBar";
 import { Grid } from "@material-ui/core";
 import download from "../utils/logo.jpeg";
+import { toast } from "react-toastify";
 
 const Home = (props) => {
   const [state, setState] = useState("student");
@@ -14,6 +15,7 @@ const Home = (props) => {
   const [studentNameList, setstudentNameList] = useState([]);
   const [studentValues, setstudentValues] = useState([]);
   const [courseValues, setcourseValues] = useState([]);
+  const [selectedCourses, setselectedCourses] = useState([]);
 
   let render = null;
 
@@ -40,19 +42,22 @@ const Home = (props) => {
     if (isConf) {
       if (type === "student")
         await axios.delete(`http://localhost:8000/api/student/${item_id}`);
-      else if (type === "course")
+      else if (type === "course") {
         await axios.delete(`http://localhost:8000/api/course/${item_id}`);
-
-      window.location.reload();
+        window.location.reload();
+        toast.success("course deleted successfully");
+      }
     }
   };
-  console.log(props);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
+    if (props.location && props.location.state && props.location.state.newState)
+      setState(props.location.state.newState);
+
     let cNameList = [];
     let sNameList = [];
-    const course = await axios.get("http://localhost:8000/api/course");
     const student = await axios.get("http://localhost:8000/api/student");
+    const course = await axios.get("http://localhost:8000/api/course");
 
     if (course && course.status === 200) {
       if (course.data.data.data && course.data.data.data.length > 0) {
@@ -76,12 +81,19 @@ const Home = (props) => {
         setstudentNameList(sNameList);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(studentValues);
+  console.log("object65456684", studentValues);
   if (studentValues.length > 0) {
     switch (state) {
       case "student":
-        render = <StudentTable rows={studentValues} deleteItem={deleteItem} />;
+        render = (
+          <StudentTable
+            rows={studentValues}
+            deleteItem={deleteItem}
+            selectedCourses={selectedCourses}
+          />
+        );
         break;
       case "course":
         render = <CourseTable rows={courseValues} deleteItem={deleteItem} />;

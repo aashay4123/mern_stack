@@ -8,10 +8,10 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import EditIcon from "@material-ui/icons/Edit";
-import Chip from "@material-ui/core/Chip";
+
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
-
+import ChipArray from "../utils/ChipArray";
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -55,7 +55,10 @@ export default function StudentTable(props) {
                 {row.program}
               </TableCell>
               <TableCell align="right" colSpan={6}>
-                <Chip label={row.courses} />
+                <ChipArray
+                  data={row.courseId}
+                  setselectedCourses={props.setselectedCourses}
+                />
               </TableCell>
               <TableCell align="right" colSpan={1}>
                 {row.mobileNumber}
