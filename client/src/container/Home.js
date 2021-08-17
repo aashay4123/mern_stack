@@ -14,7 +14,9 @@ const Home = (props) => {
   const [courseNameList, setcourseNameList] = useState([]);
   const [studentNameList, setstudentNameList] = useState([]);
   const [studentValues, setstudentValues] = useState([]);
+  const [allstudentValues, setAllstudentValues] = useState([]);
   const [courseValues, setcourseValues] = useState([]);
+  const [allcourseValues, setAllcourseValues] = useState([]);
 
   let render = null;
 
@@ -41,11 +43,10 @@ const Home = (props) => {
     if (isConf) {
       if (type === "student")
         await axios.delete(`http://localhost:8000/api/student/${item_id}`);
-      else if (type === "course") {
+      else if (type === "course")
         await axios.delete(`http://localhost:8000/api/course/${item_id}`);
-        window.location.reload();
-        toast.success("course deleted successfully");
-      }
+      window.location.reload();
+      toast.success("course deleted successfully");
     }
   };
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,6 +62,7 @@ const Home = (props) => {
     if (course && course.status === 200) {
       if (course.data.data.data && course.data.data.data.length > 0) {
         setcourseValues(course.data.data.data);
+        setAllcourseValues(course.data.data.data);
         cNameList = Array.from(
           new Set(course.data.data.data.map((o) => o.name)),
         );
@@ -71,6 +73,7 @@ const Home = (props) => {
     if (student && student.status === 200) {
       if (student.data.data.data && student.data.data.data.length > 0) {
         setstudentValues(student.data.data.data);
+        setAllstudentValues(student.data.data.data);
 
         sNameList = Array.from(
           new Set(student.data.data.data.map((o) => o.name)),
@@ -82,14 +85,25 @@ const Home = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log("object65456684", studentValues);
   if (studentValues.length > 0) {
     switch (state) {
       case "student":
-        render = <StudentTable rows={studentValues} deleteItem={deleteItem} />;
+        render = (
+          <StudentTable
+            rows={studentValues}
+            deleteItem={deleteItem}
+            allstudentValues={allstudentValues}
+          />
+        );
         break;
       case "course":
-        render = <CourseTable rows={courseValues} deleteItem={deleteItem} />;
+        render = (
+          <CourseTable
+            rows={courseValues}
+            deleteItem={deleteItem}
+            allcourseValues={allcourseValues}
+          />
+        );
         break;
 
       default:
@@ -116,7 +130,7 @@ const Home = (props) => {
         <Grid item xs={7} justifyContent="center">
           <SearchBar
             role={state}
-            list={state === "student" ? studentValues : courseValues}
+            list={state === "student" ? allstudentValues : allcourseValues}
             nameList={state === "student" ? studentNameList : courseNameList}
             style={{ width: "1000px" }}
             searchName={(newlist) => {
