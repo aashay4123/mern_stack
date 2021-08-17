@@ -65,21 +65,6 @@ export const StudentForm = (props) => {
             <Grid item xs={12}>
               <TextField
                 id="outlined-basic"
-                label="Age"
-                variant="outlined"
-                value={props.age}
-                onChange={(e) => props.handleChange(e, "age")}
-              />
-              {
-                <div style={{ color: "red", textAlign: "center" }}>
-                  {props.errors.age}
-                </div>
-              }
-            </Grid>
-            <br />
-            <Grid item xs={12}>
-              <TextField
-                id="outlined-basic"
                 label="Contact Number"
                 variant="outlined"
                 value={props.number}

@@ -18,18 +18,6 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Data Analytics & Machine Learning", 159, 6.0, 24, 4.0),
-  createData("Financial Decision Making", 237, 9.0, 37, 4.3),
-  createData("Business Innovation & Management", 262, 16.0, 24, 6.0),
-  createData("Algorithmic Trading", 305, 3.7, 67, 4.3),
-  createData("Database Management", 356, 16.0, 49, 3.9),
-];
-
 export default function CourseTable(props) {
   const classes = useStyles();
 
@@ -50,19 +38,27 @@ export default function CourseTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {props.rows.map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row" align="left">
                 {row.name}
               </TableCell>
-              <TableCell align="left">{row.calories}</TableCell>
+              <TableCell align="left">{row.credits}</TableCell>
               <TableCell align="right">
                 <IconButton aria-label="delete" className={classes.margin}>
-                  <DeleteIcon fontSize="small" />
+                  <DeleteIcon
+                    onClick={(e) => props.deleteItem(e, row._id, "course")}
+                    fontSize="small"
+                  />
                 </IconButton>
 
                 <IconButton aria-label="edit" className={classes.margin}>
-                  <EditIcon fontSize="small" />
+                  <EditIcon
+                    onClick={(e) =>
+                      window.location.replace(`/editCourse/${row._id}`)
+                    }
+                    fontSize="small"
+                  />
                 </IconButton>
               </TableCell>
             </TableRow>

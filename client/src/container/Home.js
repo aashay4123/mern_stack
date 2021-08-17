@@ -8,7 +8,7 @@ import { SearchBar } from "../utils/SearchBar";
 import { Grid } from "@material-ui/core";
 import download from "../utils/logo.jpeg";
 
-const Home = () => {
+const Home = (props) => {
   const [state, setState] = useState("student");
   const [courseNameList, setcourseNameList] = useState([]);
   const [studentNameList, setstudentNameList] = useState([]);
@@ -38,10 +38,15 @@ const Home = () => {
     e.stopPropagation();
     let isConf = window.confirm("Are you sure you want to delete ?");
     if (isConf) {
-      if (type === "student") await axios.delete(`/api/student/${item_id}`);
-      else if (type === "course") await axios.delete(`/api/course/${item_id}`);
+      if (type === "student")
+        await axios.delete(`http://localhost:8000/api/student/${item_id}`);
+      else if (type === "course")
+        await axios.delete(`http://localhost:8000/api/course/${item_id}`);
+
+      window.location.reload();
     }
   };
+  console.log(props);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
     let cNameList = [];
@@ -76,10 +81,10 @@ const Home = () => {
   if (studentValues.length > 0) {
     switch (state) {
       case "student":
-        render = <StudentTable rows={studentValues} />;
+        render = <StudentTable rows={studentValues} deleteItem={deleteItem} />;
         break;
       case "course":
-        render = <CourseTable rows={courseValues} />;
+        render = <CourseTable rows={courseValues} deleteItem={deleteItem} />;
         break;
 
       default:
@@ -90,23 +95,20 @@ const Home = () => {
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <div className="" style={{ margin: "20px" }}>
-            <img
-              src={download}
-              alt="Stevens Logo"
-              width="1200"
-              height="200"
-              style={{ width: "250px", float: "center" }}
-            />
-          </div>
+          <img
+            src={download}
+            alt="Stevens Logo"
+            style={{ width: "300px", float: "center" }}
+          />
         </Grid>
         <Grid item xs={12}>
-          <div className="" style={{ margin: "20px" }}>
+          <div className="" style={{ margin: "0px" }}>
             <Buttons state={state} setState={changeState} />
           </div>
         </Grid>
         <br />
-        <Grid item xs={3}>
+        <Grid item xs={5} justifyContent="center"></Grid>
+        <Grid item xs={7} justifyContent="center">
           <SearchBar
             role={state}
             list={state === "student" ? studentValues : courseValues}
@@ -119,45 +121,7 @@ const Home = () => {
             }}
           />
         </Grid>
-        <Grid item xs={3}>
-          <SearchBar
-            role={state}
-            list={state === "student" ? studentValues : courseValues}
-            nameList={state === "student" ? studentNameList : courseNameList}
-            style={{ width: "1000px" }}
-            searchName={(newlist) => {
-              state === "student"
-                ? setstudentValues(newlist)
-                : setcourseValues(newlist);
-            }}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <SearchBar
-            role={state}
-            list={state === "student" ? studentValues : courseValues}
-            nameList={state === "student" ? studentNameList : courseNameList}
-            style={{ width: "1000px" }}
-            searchName={(newlist) => {
-              state === "student"
-                ? setstudentValues(newlist)
-                : setcourseValues(newlist);
-            }}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <SearchBar
-            role={state}
-            list={state === "student" ? studentValues : courseValues}
-            nameList={state === "student" ? studentNameList : courseNameList}
-            style={{ width: "1000px" }}
-            searchName={(newlist) => {
-              state === "student"
-                ? setstudentValues(newlist)
-                : setcourseValues(newlist);
-            }}
-          />
-        </Grid>
+        <br />
         <Grid item xs={12}>
           <div className="" style={{ margin: "20px" }}>
             {render}

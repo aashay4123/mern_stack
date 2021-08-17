@@ -18,18 +18,6 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 export default function StudentTable(props) {
   const classes = useStyles();
   console.log("object", props);
@@ -42,19 +30,17 @@ export default function StudentTable(props) {
             <TableCell align="right" colSpan={1}>
               Program Name
             </TableCell>
-            {/* <TableCell align="right" colSpan={4}>
+            <TableCell align="right" colSpan={6}>
               Courses
-            </TableCell> */}
+            </TableCell>
             <TableCell align="right" colSpan={1}>
               Contact Number
             </TableCell>
             <TableCell align="right" colSpan={1}>
               Email
             </TableCell>
-            <TableCell align="right" colSpan={3}>
-              Age
-            </TableCell>
-            <TableCell align="right" colSpan={1}>
+
+            <TableCell align="right" colSpan={4}>
               Actions
             </TableCell>
           </TableRow>
@@ -68,9 +54,9 @@ export default function StudentTable(props) {
               <TableCell align="right" colSpan={1}>
                 {row.program}
               </TableCell>
-              {/* <TableCell align="right" colSpan={4}>
-                <Chip label={row.fat} />
-              </TableCell> */}
+              <TableCell align="right" colSpan={6}>
+                <Chip label={row.courses} />
+              </TableCell>
               <TableCell align="right" colSpan={1}>
                 {row.mobileNumber}
               </TableCell>
@@ -78,16 +64,22 @@ export default function StudentTable(props) {
                 {row.email}
               </TableCell>
 
-              <TableCell align="right" colSpan={3}>
-                {row.age}
-              </TableCell>
-              <TableCell align="right" colSpan={1}>
-                <IconButton aria-label="delete" className={classes.margin}>
+              <TableCell align="right" colSpan={4}>
+                <IconButton
+                  onClick={(e) => props.deleteItem(e, row._id, "student")}
+                  aria-label="delete"
+                  className={classes.margin}
+                >
                   <DeleteIcon fontSize="small" />
                 </IconButton>
 
                 <IconButton aria-label="edit" className={classes.margin}>
-                  <EditIcon fontSize="small" />
+                  <EditIcon
+                    onClick={(e) =>
+                      window.location.replace(`/editStudent/${row._id}`)
+                    }
+                    fontSize="small"
+                  />
                 </IconButton>
               </TableCell>
             </TableRow>

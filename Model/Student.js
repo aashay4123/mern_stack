@@ -11,10 +11,7 @@ const StudentSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  age: {
-    type: Number,
-    required: true,
-  },
+
   mobileNumber: {
     type: Number,
     required: true,

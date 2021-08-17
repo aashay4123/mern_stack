@@ -23,7 +23,6 @@ export const SearchBar = (props) => {
   };
 
   const checkname = (name1) => {
-    console.log("object", name1);
     if (name1 === "") {
       props.searchName(props.list);
     } else {
@@ -33,6 +32,8 @@ export const SearchBar = (props) => {
           return info;
         }
       });
+      console.log("object", name1, props.list, newValues);
+
       props.searchName(newValues);
     }
   };
@@ -57,17 +58,6 @@ export const SearchBar = (props) => {
           ref={ref}
           style={{ height: "50px" }}
         />
-        <div className="input-group-prepend ml-1">
-          <span className="input-group-text border-0 bg-transparent">
-            <i
-              className="fa fa-search search-hover"
-              onClick={() => {
-                checkname(name);
-                ref.current.clear();
-              }}
-            ></i>
-          </span>
-        </div>
       </div>
     </div>
   );

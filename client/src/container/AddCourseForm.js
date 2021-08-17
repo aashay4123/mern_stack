@@ -1,21 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CourseForm } from "../component/CourseForm";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const AddCourseForm = () => {
   const [name, setName] = useState("");
   const [credits, setCredits] = useState(null);
+  const id = window.location.pathname && window.location.pathname.split("/")[2];
 
   // eslint-disable-next-line no-unused-vars
   const [errors, setError] = useState({});
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(async () => {
+    if (id) {
+      const res = await axios.get(`http://localhost:8000/api/course/${id}`);
+      console.log("object", res);
+      if (res.data && res.status === 200) {
+        const data = res.data.data.data[0];
+        setName(data.name);
+        setCredits(data.credits);
+      }
+    }
+  }, [id]);
   const onClick = async (e) => {
     e.preventDefault();
     let body = {
       name,
       credits,
     };
-    await axios.post("/api/", body);
+    if (body.name && body.credits) {
+      let op;
+      if (id)
+        op = await axios.patch(`http://localhost:8000/api/course/${id}`, body);
+      else op = await axios.post("http://localhost:8000/api/course", body);
+      console.log("object13554", op);
+      if (op.status === 200) toast.success("Course successfully added");
+      else toast.error("Something went wrong");
+      window.location.replace("/");
+    } else {
+      toast.error("Please fill the complete form");
+    }
   };
   const handleChange = (event, setValue) => {
     switch (setValue) {
