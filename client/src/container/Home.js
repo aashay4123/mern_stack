@@ -15,7 +15,6 @@ const Home = (props) => {
   const [studentNameList, setstudentNameList] = useState([]);
   const [studentValues, setstudentValues] = useState([]);
   const [courseValues, setcourseValues] = useState([]);
-  const [selectedCourses, setselectedCourses] = useState([]);
 
   let render = null;
 
@@ -87,13 +86,7 @@ const Home = (props) => {
   if (studentValues.length > 0) {
     switch (state) {
       case "student":
-        render = (
-          <StudentTable
-            rows={studentValues}
-            deleteItem={deleteItem}
-            selectedCourses={selectedCourses}
-          />
-        );
+        render = <StudentTable rows={studentValues} deleteItem={deleteItem} />;
         break;
       case "course":
         render = <CourseTable rows={courseValues} deleteItem={deleteItem} />;
